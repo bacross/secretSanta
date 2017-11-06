@@ -18,6 +18,7 @@ gmail_password = data['gmailconfig']['gmail_password']
 
 def genSecretSanta(nkidList,nspouseDict):
     santaList=[]
+    santaDict={}
     for each in kidList:
         eachList = [kid for kid in nkidList if kid != each and kid not in santaList and kid != nspouseDict[each]]
         if eachList == []:
@@ -25,17 +26,18 @@ def genSecretSanta(nkidList,nspouseDict):
         else:
             kid = np.random.choice(eachList,replace='False')
         santaList.append(kid)
+        santaDict[each]=kid
         
-    return santaList
+    return santaDict
 
-santaList = genSecretSanta(kidList,spouseDict)
+santaDict = genSecretSanta(kidList,spouseDict)
 
 FROM = gmail_user
 SUBJECT = "Secret Santa Test"
 
 for i in range(len(emailDict.keys())):
     TO = emailDict[emailDict.keys()[i]]
-    BODY = '%s, your Secret Santa Gift Recipient is:  %s' %(kidList[i],santaList[i])
+    BODY = '%s %s, your Secret Santa Gift Recipient is:  %s' %(emailDict.keys()[i],emailDict[emailDict.keys()[i]],santaDict[emailDict.keys()[i]])
 
     # Create message container - the correct MIME type is multipart/alternative.
     msg = MIMEMultipart('alternative')
