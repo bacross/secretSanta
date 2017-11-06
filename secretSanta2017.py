@@ -33,7 +33,7 @@ def genSecretSanta(nkidList,nspouseDict):
 santaDict = genSecretSanta(kidList,spouseDict)
 
 FROM = gmail_user
-SUBJECT = "Secret Santa Test"
+SUBJECT = "Secret Santa"
 
 for i in range(len(emailDict.keys())):
     TO = emailDict[emailDict.keys()[i]]
